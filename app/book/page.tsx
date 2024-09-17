@@ -6,7 +6,7 @@ import { useState } from 'react'
 import { ContactModal } from '@/components/ContactModal'
 import dynamic from 'next/dynamic'
 
-const CalendlyWidget = dynamic(() => import('@/components/CalendlyWidget'), {
+const CalendlyWidget = dynamic(() => import('@/components/CalendlyWidget').then(mod => mod.CalendlyWidget), {
   ssr: false,
   loading: () => <div className="h-[600px] max-h-[80vh] flex items-center justify-center text-white">Loading calendar...</div>
 })

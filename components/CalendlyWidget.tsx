@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 
-export default function CalendlyWidget() {
+export function CalendlyWidget() {
   const calendlyRef = useRef<HTMLDivElement>(null)
   const [isCalendlyReady, setIsCalendlyReady] = useState(false)
 
@@ -10,11 +10,8 @@ export default function CalendlyWidget() {
     const script = document.createElement('script')
     script.src = 'https://assets.calendly.com/assets/external/widget.js'
     script.async = true
+    script.onload = () => setIsCalendlyReady(true)
     document.body.appendChild(script)
-
-    script.onload = () => {
-      setIsCalendlyReady(true)
-    }
 
     return () => {
       document.body.removeChild(script)
@@ -22,28 +19,26 @@ export default function CalendlyWidget() {
   }, [])
 
   useEffect(() => {
-    if (isCalendlyReady && calendlyRef.current) {
-      // @ts-expect-error Calendly types are not available, but the API is used as documented
-      window.Calendly.initInlineWidget({
-        url: 'https://calendly.com/rob-vox/discovery-call',
-        parentElement: calendlyRef.current,
-        prefill: {},
-        utm: {}
-      })
+    if (isCalendlyReady && calendlyRef.current && window.Calendly) {
+      try {
+        window.Calendly.initInlineWidget({
+          url: 'https://calendly.com/rob-vox/discovery-call',
+          parentElement: calendlyRef.current,
+          prefill: {},
+          utm: {}
+        })
+      } catch (error) {
+        console.error('Error initializing Calendly widget:', error)
+      }
     }
   }, [isCalendlyReady])
 
-  return (
-    <div 
-      ref={calendlyRef}
-      className="calendly-inline-widget"
-      style={{minWidth: '320px', width: '100%', height: '600px', maxHeight: '80vh'}}
-    >
-      {!isCalendlyReady && (
-        <div className="h-full flex items-center justify-center text-gray-600">
-          Loading calendar...
-        </div>
-      )}
-    </div>
-  )
+  return <div ref={calendlyRef} style={{ minWidth: '320px', height: '630px' }} />
+}
+
+// Add this to ensure TypeScript recognizes the Calendly global object
+declare global {
+  interface Window {
+    Calendly?: import('calendly').Calendly
+  }
 }

@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Menu, X } from 'lucide-react'
 import { ContactModal } from '@/components/ContactModal'
-import CalendlyWidget from '@/components/CalendlyWidget'
+import { CalendlyWidget } from '@/components/CalendlyWidget'
 
 const BookCallButton = ({ children, icon }: { children: React.ReactNode, icon?: string }) => (
   <Link href="/book">
