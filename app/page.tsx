@@ -27,7 +27,7 @@ export default function HomePage() {
     <div className="min-h-screen text-white font-colfax text-base">
       {/* Top banner */}
       <div className="bg-gradient-to-r from-[#52747d] via-[#3F545D] to-[#52747d] text-white text-center py-2 text-sm font-medium shadow-md relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10 bg-[url(&apos;/Background Graphics/Background_Hexagon Pattern Only.png&apos;)] bg-repeat"></div>
+        <div className="absolute inset-0 opacity-10 bg-[url(/Background Graphics/Background_Hexagon Pattern Only.png)] bg-repeat"></div>
         <div className="relative z-10">
           Only 20 openings available this semester! Schedule your free discovery call today!
         </div>
@@ -148,7 +148,7 @@ export default function HomePage() {
                     icon: "/Icon Graphics/Icon_Goggles.png"
                   },
                   {
-                    title: "You&apos;re not just taking the class to pass",
+                    title: "You're not just taking the class to pass",
                     content: (
                       <>
                         You&apos;re taking the class for a reason. Together, we connect course concepts to your <strong>intended use case</strong> and <strong>your interests</strong>, increasing short-term engagement and long-term retention. Prefer medical examples, climate examples, or nanotechnology examples? <strong>I&apos;ve got you</strong>.

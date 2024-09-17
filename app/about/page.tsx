@@ -94,7 +94,7 @@ export default function AboutPage() {
               </div>
               */}
      
-              <div className="bg-gradient-to-br from-[#1F1D24]/80 to-[#303B42]/80 p-6 rounded-lg shadow-xl backdrop-blur-sm text-center max-w-2xl mx-auto">
+              <div className="bg-gradient-to-br from-[#1F1D24]/80 to-[#303B42]/80 p-6 rounded-lg shadow-xl backdrop-blur-sm max-w-2xl mx-auto">
                 <h2 className="text-3xl font-bold mb-4 text-[#A3B8C2]">Robert Palkovitz</h2>
                 <p className="mb-4 text-[#E0E7EB]">
                   Remote Tutoring is a Chemistry tutoring service led by Robert Palkovitz. As an undergrad and grad student, Rob taught, tutored, or TAd every class he could fit in his schedule. Rob graduated from Johns Hopkins University in 2021 with his Master&apos;s in Chemistry and has since worked as a startup launch manager and private consultant across multiple sectors.
