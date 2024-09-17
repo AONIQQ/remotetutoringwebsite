@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ContactModal } from '@/components/ContactModal';
-import { Phone, ChevronDown } from 'lucide-react';
+import { Phone, ChevronDown, Menu, X } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -18,10 +18,17 @@ interface SectionProps {
 
 const Section: React.FC<SectionProps> = ({ title, content, icon }) => (
   <div className="panel relative h-screen min-w-full flex flex-col bg-gradient-to-r from-[#303B42] via-[#52747D] to-[#303B42] p-4 sm:p-6 md:p-8 rounded-lg shadow-lg">
-    <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold mb-6 sm:mb-8 text-center text-white uppercase tracking-wider shadow-text">
-      {title}
-    </h2>
-    <div className="text-[#E0E7EB] space-y-4 sm:space-y-6 overflow-y-auto flex-grow h-[50vh] sm:h-[60vh] md:h-[70vh] pr-4">
+    <div className="flex justify-between items-start mb-6 sm:mb-8">
+      <div className="flex-1 pr-4">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-center text-white uppercase tracking-wider shadow-text">
+          {title}
+        </h2>
+      </div>
+      <div className="flex-shrink-0 bg-[#1F1D24] p-1 sm:p-2 rounded-full shadow-lg">
+        <Image src={icon} alt="Section Icon" width={40} height={40} className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12" />
+      </div>
+    </div>
+    <div className="text-[#E0E7EB] space-y-4 sm:space-y-6 overflow-y-auto flex-grow h-[80%] pr-4">
       {content.map((paragraph, index) => (
         <div key={index} className="bg-gradient-to-r from-[#1F2937] to-[#374151] p-4 rounded-lg shadow-md">
           <p className="text-xs sm:text-sm md:text-base lg:text-lg leading-relaxed whitespace-pre-line">
@@ -29,9 +36,6 @@ const Section: React.FC<SectionProps> = ({ title, content, icon }) => (
           </p>
         </div>
       ))}
-    </div>
-    <div className="absolute top-4 right-4 bg-[#1F1D24] p-2 rounded-full shadow-lg">
-      <Image src={icon} alt="Section Icon" width={40} height={40} className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12" />
     </div>
   </div>
 );
@@ -107,6 +111,7 @@ const HorizontalScrollCarousel = () => {
 
 export default function ServicesPage() {
   const [contactModalOpen, setContactModalOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <div className="min-h-screen overflow-x-hidden text-white font-sans">
@@ -144,7 +149,41 @@ export default function ServicesPage() {
           Book a Call
           </button>
         </nav>
+        <div className="md:hidden">
+          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="text-white">
+            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </header>
+
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <div className="md:hidden bg-[#1F1D24] py-4 px-6">
+          <nav className="flex flex-col space-y-4">
+            <Link href="/" className="text-white hover:text-[#52747D] text-sm">
+              Home
+            </Link>
+            <Link href="/about" className="text-white hover:text-[#52747D] text-sm">
+              About
+            </Link>
+            <button
+              onClick={() => {
+                setContactModalOpen(true);
+                setMobileMenuOpen(false);
+              }}
+              className="text-white hover:text-[#52747D] text-sm text-left"
+            >
+              Contact
+            </button>
+            <button
+              onClick={() => window.location.href = '/book'}
+              className="bg-gradient-to-r from-[#52747D] to-[#3F545D] text-white py-2 px-4 rounded-lg flex items-center shadow-md hover:shadow-lg transition-all duration-300 text-sm"
+            >
+              Book a Call
+            </button>
+          </nav>
+        </div>
+      )}
 
       {/* Services Header */}
       <div className="relative py-8 sm:py-12">
@@ -201,7 +240,7 @@ export default function ServicesPage() {
             </p>
           </div>
           <div className="mt-6 sm:mt-8 flex justify-center">
-            <div className="rounded-full overflow-hidden w-72 h-72 sm:w-96 sm:h-96 md:w-112 md:h-112 bg-[#303B42]">
+            <div className="rounded-full overflow-hidden w-72 h-72 sm:w-96 sm:h-96 md: w-112 md:h-112 bg-[#303B42]">
               <video
                 className="w-full h-full object-cover"
                 autoPlay
@@ -275,6 +314,13 @@ export default function ServicesPage() {
 
         .shadow-text {
           text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        @media (min-width: 2560px) {
+          .panel p {
+            font-size: 1.25rem;
+            line-height: 1.75rem;
+          }
         }
       `}</style>
     </div>

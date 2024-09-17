@@ -3,13 +3,14 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState, useEffect, useRef } from 'react'
-import { Phone, FileText, Microscope, X } from 'lucide-react'
+import { Phone, FileText, Microscope, X, Menu } from 'lucide-react'
 import { ContactModal } from '@/components/ContactModal'
 
 export default function AboutPage() {
   const [degreesModalOpen, setDegreesModalOpen] = useState(false)
   const [experienceModalOpen, setExperienceModalOpen] = useState(false)
   const [contactModalOpen, setContactModalOpen] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const modalRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -64,14 +65,44 @@ export default function AboutPage() {
         </div>
         <nav className="hidden md:flex items-center space-x-6">
           <Link href="/" className="text-white hover:text-[#52747D]">Home</Link>
-          <Link href="/about" className="text-white hover:text-[#52747D]">About</Link>
           <Link href="/services" className="text-white hover:text-[#52747D]">Services</Link>
           <button onClick={() => setContactModalOpen(true)} className="text-white hover:text-[#52747D]">Contact</button>
           <Link href="/book" className="bg-gradient-to-r from-[#52747D] to-[#3F545D] text-white py-2 px-4 rounded-lg hover:shadow-lg transition-all duration-300">
             Book a Call
           </Link>
         </nav>
+        <div className="md:hidden">
+          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="text-white">
+            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </header>
+
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <div className="md:hidden bg-[#1F1D24] py-4 px-6">
+          <nav className="flex flex-col space-y-4">
+            <Link href="/" className="text-white hover:text-[#52747D] text-sm">
+              Home
+            </Link>
+            <Link href="/services" className="text-white hover:text-[#52747D] text-sm">
+              Services
+            </Link>
+            <button
+              onClick={() => {
+                setContactModalOpen(true);
+                setMobileMenuOpen(false);
+              }}
+              className="text-white hover:text-[#52747D] text-sm text-left"
+            >
+              Contact
+            </button>
+            <Link href="/book" className="bg-gradient-to-r from-[#52747D] to-[#3F545D] text-white py-2 px-4 rounded-lg hover:shadow-lg transition-all duration-300 text-sm">
+              Book a Call
+            </Link>
+          </nav>
+        </div>
+      )}
 
       {/* Main Content */}
       <main className="relative min-h-screen">
@@ -89,11 +120,6 @@ export default function AboutPage() {
             <h1 className="text-4xl sm:text-5xl font-bold text-center mb-12 text-[#A3B8C2]">ABOUT REMOTE TUTORING TEAM</h1>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-            {/*  <div className="flex justify-center md:justify-start">
-                <Image src="/guy.png" alt="Robert Palkovitz" width={700} height={400} className="rounded-lg shadow-xl" />
-              </div>
-              */}
-     
               <div className="bg-gradient-to-br from-[#1F1D24]/80 to-[#303B42]/80 p-6 rounded-lg shadow-xl backdrop-blur-sm max-w-2xl mx-auto">
                 <h2 className="text-3xl font-bold mb-4 text-[#A3B8C2]">Robert Palkovitz</h2>
                 <p className="mb-4 text-[#E0E7EB]">
@@ -163,7 +189,6 @@ export default function AboutPage() {
           </div>
         </div>
       </main>
-
 
       {/* Modals */}
       <Modal isOpen={degreesModalOpen} onClose={() => setDegreesModalOpen(false)}>

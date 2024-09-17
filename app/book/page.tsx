@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { ContactModal } from '@/components/ContactModal'
 import dynamic from 'next/dynamic'
+import { Menu, X } from 'lucide-react'
 
 const CalendlyWidget = dynamic(() => import('@/components/CalendlyWidget').then(mod => mod.CalendlyWidget), {
   ssr: false,
@@ -13,6 +14,7 @@ const CalendlyWidget = dynamic(() => import('@/components/CalendlyWidget').then(
 
 export default function BookPage() {
   const [contactModalOpen, setContactModalOpen] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
     <div className="min-h-screen flex flex-col text-white font-sans">
@@ -43,7 +45,38 @@ export default function BookPage() {
           <div className="flex items-center text-[#52747D] text-sm lg:text-base">
           </div>
         </nav>
+        <div className="md:hidden">
+          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="text-white">
+            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </header>
+
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <div className="md:hidden bg-[#1F1D24] py-4 px-6">
+          <nav className="flex flex-col space-y-4">
+            <Link href="/" className="text-white hover:text-[#52747D] text-sm">
+              Home
+            </Link>
+            <Link href="/about" className="text-white hover:text-[#52747D] text-sm">
+              About
+            </Link>
+            <Link href="/services" className="text-white hover:text-[#52747D] text-sm">
+              Services
+            </Link>
+            <button
+              onClick={() => {
+                setContactModalOpen(true);
+                setMobileMenuOpen(false);
+              }}
+              className="text-white hover:text-[#52747D] text-sm text-left"
+            >
+              Contact
+            </button>
+          </nav>
+        </div>
+      )}
 
       {/* Main Content */}
       <main className="flex-grow relative">
@@ -70,7 +103,6 @@ export default function BookPage() {
         </div>
       </main>
 
-    
       {/* Contact Modal */}
       <ContactModal isOpen={contactModalOpen} onClose={() => setContactModalOpen(false)} />
     </div>
