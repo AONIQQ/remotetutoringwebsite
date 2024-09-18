@@ -27,6 +27,9 @@ function Footer() {
               </button>
             </div>
             <p className="text-sm">&copy; {new Date().getFullYear()} Remote Tutoring. All rights reserved.</p>
+        <Link href="https://www.aoniqq.com/websitecreation" className="hover:text-[#A3B8C2] transition-colors duration-300 underline mt-4">
+          Site by Aoniqq LLC
+        </Link>
           </div>
         </div>
       </footer>

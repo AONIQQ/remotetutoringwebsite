@@ -114,7 +114,7 @@ export default function ServicesPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <div className="min-h-screen overflow-x-hidden text-white font-sans">
+    <div className="min-h-screen overflow-x-hidden text-white font-sans flex flex-col">
       {/* Top banner */}
       <div className="bg-gradient-to-r from-[#52747d] via-[#3F545D] to-[#52747d] text-white text-center py-2 text-xs sm:text-sm font-medium shadow-md">
         <div className="relative z-10">
@@ -185,84 +185,87 @@ export default function ServicesPage() {
         </div>
       )}
 
-      {/* Services Header */}
-      <div className="relative py-8 sm:py-12">
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-center text-[#A3B8C2] relative z-10">
-          SERVICES
-        </h1>
-      </div>
-
-      {/* Scroll down indicator */}
-      <div className="flex flex-col items-center justify-center mb-8">
-        <span className="font-semibold uppercase text-neutral-500 text-sm sm:text-base mb-2">
-          Scroll down to explore our services
-        </span>
-        <ChevronDown className="w-6 h-6 text-neutral-500 animate-bounce" />
-      </div>
-
-      {/* Reduced padding before carousel */}
-      <div className="py-8 sm:py-10"></div>
-
-      <HorizontalScrollCarousel />
-
-      {/* Core Tutoring Plan Section */}
-      <div className="relative py-4 sm:py-6">
-        <div className="max-w-4xl mx-auto px-4">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 text-center text-[#A3B8C2] relative z-10">
-            CORE TUTORING PLAN
-          </h2>
-          <div className="p-4 sm:p-6 rounded-lg text-[#E0E7EB] relative z-10 bg-gradient-to-br from-[#303B42] to-[#52747D] shadow-xl">
-            <p className="text-sm sm:text-base md:text-lg text-center">
-              The core plan offers one hour of tutoring per week for the duration of the semester at a rate of $100/hour. The total cost is paid upfront through Stripe, with financing options available if you&apos;d rather pay over time. I&apos;m confident in the quality of my services, which is why I guarantee my performance and yours (see below).
-            </p>
-          </div>
+      <main className="flex-grow">
+        {/* Services Header */}
+        <div className="relative py-8 sm:py-12">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-center text-[#A3B8C2] relative z-10">
+            SERVICES
+          </h1>
         </div>
-      </div>
 
-      {/* Guarantee Section */}
-      <div className="relative py-8 sm:py-12">
-        <div className="max-w-4xl mx-auto px-4">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 sm:mb-8 text-center text-[#A3B8C2] relative z-10">
-            GUARANTEE
-          </h2>
-          <div className="p-4 sm:p-6 md:p-8 rounded-lg text-[#E0E7EB] relative z-10 bg-gradient-to-br from-[#303B42] to-[#52747D] shadow-xl">
-            <p className="mb-4 text-sm sm:text-base md:text-lg text-center">
-              I guarantee my performance, presence, and punctuality. If I&apos;m ever late, absent, or unprepared* for a
-              session, I&apos;ll issue you a refund for 100% of the cost of the session, offer a free replacement session,
-              and void your commitment to me so that you can terminate our arrangement for a full refund if you
-              believe I&apos;m not providing the value I promised you. I can&apos;t guarantee that you&apos;ll go to every class, take
-              notes, submit assignments on time, study, show up for exams, or even show up for our sessions.
-              But if you do all that, I guarantee that you will not fail the class. If something unforeseen happens
-              and you do, I&apos;ll issue you a full refund and I&apos;ll tutor you for free if you retake the course.
-            </p>
-            <p className="text-xs sm:text-sm italic text-center">
-              *Guarantee subject to contract terms and conditions. Ask me about this on our call.
-            </p>
-          </div>
-          <div className="mt-6 sm:mt-8 flex justify-center">
-            <div className="rounded-full overflow-hidden w-72 h-72 sm:w-96 sm:h-96 md: w-112 md:h-112 bg-[#303B42]">
-              <video
-                className="w-full h-full object-cover"
-                autoPlay
-                loop
-                muted
-                playsInline
-              >
-                <source src="/Videos & GIFs/Beaker Animation.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
+        {/* Scroll down indicator */}
+        <div className="flex flex-col items-center justify-center mb-8">
+          <span className="font-semibold uppercase text-neutral-500 text-sm sm:text-base mb-2">
+            Scroll down to explore our services
+          </span>
+          <ChevronDown className="w-6 h-6 text-neutral-500 animate-bounce" />
+        </div>
+
+        {/* Reduced padding before carousel */}
+        <div className="py-8 sm:py-10"></div>
+
+        <HorizontalScrollCarousel />
+
+        {/* Core Tutoring Plan Section */}
+        <div className="relative py-4 sm:py-6">
+          <div className="max-w-4xl mx-auto px-4">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 text-center text-[#A3B8C2] relative z-10">
+              CORE TUTORING PLAN
+            </h2>
+            <div className="p-4 sm:p-6 rounded-lg text-[#E0E7EB] relative z-10 bg-gradient-to-br from-[#303B42] to-[#52747D] shadow-xl">
+              <p className="text-sm sm:text-base md:text-lg text-center">
+                The core plan offers one hour of tutoring per week for the duration of the semester at a rate of $100/hour. The total cost is paid upfront through Stripe, with financing options available if you&apos;d rather pay over time. I&apos;m confident in the quality of my services, which is why I guarantee my performance and yours (see below).
+              </p>
             </div>
           </div>
-          <div className="mt-6 sm:mt-8 flex justify-center">
-            <Link href="/book">
-              <button className="bg-gradient-to-r from-[#52747D] to-[#3F545D] text-white py-2 sm:py-3 px-4 sm:px-6 rounded-lg flex items-center shadow-md hover:shadow-lg transition-all duration-300 text-sm sm:text-base">
-                <Phone className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                Book a free discovery call
-              </button>
-            </Link>
+        </div>
+
+        {/* Guarantee Section */}
+        <div className="relative py-8 sm:py-12">
+          <div className="max-w-4xl mx-auto px-4">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 sm:mb-8 text-center text-[#A3B8C2] relative z-10">
+              GUARANTEE
+            </h2>
+            <div className="p-4 sm:p-6 md:p-8 rounded-lg text-[#E0E7EB] relative z-10 bg-gradient-to-br from-[#303B42] to-[#52747D] shadow-xl">
+              <p className="mb-4 text-sm sm:text-base md:text-lg text-center">
+                I guarantee my performance, presence, and punctuality. If I&apos;m ever late, absent, or unprepared* for a
+                session, I&apos;ll issue you a refund for 100% of the cost of the session, offer a free replacement session,
+                and void your commitment to me so that you can terminate our arrangement for a full refund if you
+                believe I&apos;m not providing the value I promised you. I can&apos;t guarantee that you&apos;ll go to every class, take
+                notes, submit assignments on time, study, show up for exams, or even show up for our sessions.
+                But if you do all that, I guarantee that you will not fail the class. If something unforeseen happens
+                and you do, I&apos;ll issue you a full refund and I&apos;ll tutor you for free if you retake the course.
+              </p>
+              <p className="text-xs sm:text-sm italic text-center">
+                *Guarantee subject to contract terms and conditions. Ask me about this on our call.
+              </p>
+            </div>
+            <div className="mt-6 sm:mt-8 flex justify-center">
+              <div className="rounde d-full overflow-hidden w-72 h-72 sm:w-96 sm:h-96 md:w-112 md:h-112 bg-[#303B42]">
+                <video
+                  className="w-full h-full object-cover"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                >
+                  <source src="/Videos & GIFs/Beaker Animation.mp4" type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            </div>
+            <div className="mt-6 sm:mt-8 flex justify-center">
+              <Link href="/book">
+                <button className="bg-gradient-to-r from-[#52747D] to-[#3F545D] text-white py-2 sm:py-3 px-4 sm:px-6 rounded-lg flex items-center shadow-md hover:shadow-lg transition-all duration-300 text-sm sm:text-base">
+                  <Phone className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+                  Book a free discovery call
+                </button>
+              </Link>
+            </div>
           </div>
         </div>
-      </div>
+      </main>
+
 
       {/* Contact Modal */}
       <ContactModal isOpen={contactModalOpen} onClose={() => setContactModalOpen(false)} />
