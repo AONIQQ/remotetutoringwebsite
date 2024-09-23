@@ -215,6 +215,15 @@ export default function AboutPage() {
             <h3 className="text-2xl font-bold">RELEVANT EXPERIENCE</h3>
           </div>
           <div className="space-y-6">
+          <div className="bg-[#303B42] p-4 rounded-lg">
+              <h4 className="text-xl font-bold mb-2">Research</h4>
+              <p>Over 8000 hours of grant-funded independent research in Organic Chemistry with sub-focuses in Mechanistic and Synthetic Organic, Biochemistry, Bio-Inorganic, Nanomaterials, and Photochemistry.:</p>
+              </div>
+             <div className="bg-[#303B42] p-4 rounded-lg">
+              <h4 className="text-xl font-bold mb-2">Chemistry Tutor</h4>
+              <p>Franklin and Marshall College Quantitative & Science Center:</p>
+              <p>Tutored General Chemistry II, Organic Chemistry I & II. Led weekly Organic Chemistry Supplemental Instruction sessions for which I developed and distributed problems sets and individually guided students in solving them.</p>
+            </div>
             <div className="bg-[#303B42] p-4 rounded-lg">
               <h4 className="text-xl font-bold mb-2">Teaching Assistant</h4>
               <p>Johns Hopkins University: Assisted in Organic Chemistry I, General Chemistry I, General Chemistry II, and served as Head TA for General Chemistry II.</p>
