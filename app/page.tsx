@@ -100,7 +100,7 @@ export default function ServicesPage() {
 
   useEffect(() => {
     const savedState = localStorage.getItem('openSections');
-    let initialState = savedState ? JSON.parse(savedState) : new Array(sections.length).fill(false);
+    const initialState = savedState ? JSON.parse(savedState) : new Array(sections.length).fill(false);
 
     const handleResize = () => {
       const width = window.innerWidth;
@@ -248,7 +248,8 @@ export default function ServicesPage() {
                 session, I&apos;ll issue you a refund for 100% of the cost of the session, offer a free replacement session,
                 and void your commitment to me so that you can terminate our arrangement for a full refund if you
                 believe I&apos;m not providing the value I promised you. I can&apos;t guarantee that you&apos;ll go to every class, take
-                notes, submit assignments on time, study, show up for exams, or even show up for our sessions.
+                notes, submit assignments on time, study, show up for exams,
+                or even show up for our sessions.
                 But if you do all that, I guarantee that you will not fail the class. If something unforeseen happens
                 and you do, I&apos;ll issue you a full refund and I&apos;ll tutor you for free if you retake the course.
               </p>
