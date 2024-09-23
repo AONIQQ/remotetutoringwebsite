@@ -29,6 +29,7 @@ const ExpandableSection: React.FC<SectionProps> = ({ title, content, icon, isOpe
         className="flex justify-between items-center p-4 cursor-pointer"
         onClick={(e) => {
           e.preventDefault();
+          e.stopPropagation();
           onToggle();
         }}
       >
@@ -44,8 +45,7 @@ const ExpandableSection: React.FC<SectionProps> = ({ title, content, icon, isOpe
       </div>
       <div
         ref={contentRef}
-        className="overflow-hidden transition-all duration-300 ease-in-out"
-        style={{ maxHeight: 0 }}
+        className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-[2000px]' : 'max-h-0'}`}
       >
         <div className="p-4 text-[#E0E7EB] space-y-4">
           {content.map((paragraph, index) => (
@@ -99,29 +99,37 @@ export default function ServicesPage() {
   ];
 
   useEffect(() => {
+    const savedState = localStorage.getItem('openSections');
+    const initialState = savedState ? JSON.parse(savedState) : new Array(sections.length).fill(false);
+
     const handleResize = () => {
       const width = window.innerWidth;
+      let newState: boolean[];
+  
       if (width >= 2560) {
         // 24 inches and above (assuming 2560px is roughly 24 inches)
-        setOpenSections(new Array(sections.length).fill(true));
+        newState = new Array(sections.length).fill(true);
       } else if (width >= 1024) {
         // Between 12 inches and 24 inches (laptops)
-        setOpenSections([false, true, false]); // Only ORGANIC CHEMISTRY is open
+        newState = initialState.map((_: boolean, index: number) => index === 1 || initialState[index]);
       } else {
         // Less than 12 inches (mobile and iPad)
-        setOpenSections(new Array(sections.length).fill(false));
+        newState = [...initialState];
       }
+  
+      setOpenSections(newState);
+      localStorage.setItem('openSections', JSON.stringify(newState));
     };
-
+  
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  }, [sections.length]);
 
   const toggleSection = (index: number) => {
     setOpenSections(prev => {
-      const newState = [...prev];
-      newState[index] = !newState[index];
+      const newState = prev.map((isOpen, i) => i === index ? !isOpen : isOpen);
+      localStorage.setItem('openSections', JSON.stringify(newState));
       return newState;
     });
   };
@@ -299,11 +307,12 @@ export default function ServicesPage() {
           font-family: 'Signika Negative', sans-serif, Arial;
         }
 
-        html {
-          background: url('/Background Graphics/Background_Static Dark Hexagon Pattern.png') repeat;
-          height: 100%;
-          overflow-y: scroll;
-        }
+       html {
+  background: url('/Background Graphics/Background_Static Dark Hexagon Pattern.png') no-repeat center center fixed;
+  background-size: cover;
+  height: 100%;
+  overflow-y: scroll;
+}
 
         body {
           position: relative;
