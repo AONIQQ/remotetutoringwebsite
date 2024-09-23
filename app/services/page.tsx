@@ -1,72 +1,53 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ContactModal } from '@/components/ContactModal';
 import { Phone, ChevronDown, Menu, X } from 'lucide-react';
-
-gsap.registerPlugin(ScrollTrigger);
 
 interface SectionProps {
   title: string;
   content: string[];
   icon: string;
+  isOpen: boolean;
+  onToggle: () => void;
 }
 
-const Section: React.FC<SectionProps> = ({ title, content, icon }) => (
-  <div className="panel relative h-screen min-w-full flex flex-col bg-gradient-to-r from-[#303B42] via-[#52747D] to-[#303B42] p-4 sm:p-6 md:p-8 rounded-lg shadow-lg">
-    <div className="flex justify-between items-start mb-6 sm:mb-8">
-      <div className="flex-1 pr-4">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-center text-white uppercase tracking-wider shadow-text">
-          {title}
-        </h2>
-      </div>
-      <div className="flex-shrink-0 bg-[#1F1D24] p-1 sm:p-2 rounded-full shadow-lg">
-        <Image src={icon} alt="Section Icon" width={40} height={40} className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12" />
-      </div>
-    </div>
-    <div className="text-[#E0E7EB] space-y-4 sm:space-y-6 overflow-y-auto flex-grow h-[80%] pr-4">
-      {content.map((paragraph, index) => (
-        <div key={index} className="bg-gradient-to-r from-[#1F2937] to-[#374151] p-4 rounded-lg shadow-md">
-          <p className="text-xs sm:text-sm md:text-base lg:text-lg leading-relaxed whitespace-pre-line">
-            {paragraph}
-          </p>
+const ExpandableSection: React.FC<SectionProps> = ({ title, content, icon, isOpen, onToggle }) => (
+  <div className="mb-6 bg-gradient-to-r from-[#303B42] via-[#52747D] to-[#303B42] rounded-lg shadow-lg overflow-hidden">
+    <div 
+      className="flex justify-between items-center p-4 cursor-pointer"
+      onClick={onToggle}
+    >
+      <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white uppercase tracking-wider shadow-text">
+        {title}
+      </h2>
+      <div className="flex items-center">
+        <div className="bg-[#1F1D24] p-1 sm:p-2 rounded-full shadow-lg mr-4">
+          <Image src={icon} alt="Section Icon" width={40} height={40} className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10" />
         </div>
-      ))}
+        <ChevronDown className={`w-6 h-6 transition-transform duration-300 ${isOpen ? 'transform rotate-180' : ''}`} />
+      </div>
     </div>
+    {isOpen && (
+      <div className="p-4 text-[#E0E7EB] space-y-4">
+        {content.map((paragraph, index) => (
+          <div key={index} className="bg-gradient-to-r from-[#1F2937] to-[#374151] p-4 rounded-lg shadow-md">
+            <p className="text-xs sm:text-sm md:text-base lg:text-lg leading-relaxed whitespace-pre-line">
+              {paragraph}
+            </p>
+          </div>
+        ))}
+      </div>
+    )}
   </div>
 );
 
-const HorizontalScrollCarousel = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!containerRef.current) return;
-
-    const sections = gsap.utils.toArray<HTMLElement>('.panel');
-    const totalWidth = sections.reduce(
-      (width, el) => width + el.offsetWidth,
-      0
-    );
-
-    gsap.to(sections, {
-      x: () => -(totalWidth + 400 - window.innerWidth),
-      scrollTrigger: {
-        trigger: containerRef.current,
-        pin: true,
-        scrub: 1,
-        end: () => `+=${totalWidth + 400}`,
-        invalidateOnRefresh: true,
-      },
-    });
-
-    return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-    };
-  }, []);
+export default function ServicesPage() {
+  const [contactModalOpen, setContactModalOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [openSections, setOpenSections] = useState<boolean[]>([]);
 
   const sections = [
     {
@@ -100,18 +81,33 @@ const HorizontalScrollCarousel = () => {
     },
   ];
 
-  return (
-    <div ref={containerRef} className="container flex flex-row mb-4">
-      {sections.map((section, index) => (
-        <Section key={index} {...section} />
-      ))}
-    </div>
-  );
-};
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      if (width >= 2560) {
+        // 24 inches and above (assuming 1920px is roughly 24 inches)
+        setOpenSections(new Array(sections.length).fill(true));
+      } else if (width >= 1024) {
+        // Between 12 inches and 24 inches
+        setOpenSections([true, ...new Array(sections.length - 1).fill(false)]);
+      } else {
+        // Less than 12 inches
+        setOpenSections(new Array(sections.length).fill(false));
+      }
+    };
 
-export default function ServicesPage() {
-  const [contactModalOpen, setContactModalOpen] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const toggleSection = (index: number) => {
+    setOpenSections(prev => {
+      const newState = [...prev];
+      newState[index] = !newState[index];
+      return newState;
+    });
+  };
 
   return (
     <div className="min-h-screen overflow-x-hidden text-white font-sans flex flex-col">
@@ -193,18 +189,17 @@ export default function ServicesPage() {
           </h1>
         </div>
 
-        {/* Scroll down indicator */}
-        <div className="flex flex-col items-center justify-center mb-8">
-          <span className="font-semibold uppercase text-neutral-500 text-sm sm:text-base mb-2">
-            Scroll down to explore our services
-          </span>
-          <ChevronDown className="w-6 h-6 text-neutral-500 animate-bounce" />
+        {/* Expandable Sections */}
+        <div className="max-w-4xl mx-auto px-4 py-8">
+          {sections.map((section, index) => (
+            <ExpandableSection
+              key={index}
+              {...section}
+              isOpen={openSections[index]}
+              onToggle={() => toggleSection(index)}
+            />
+          ))}
         </div>
-
-        {/* Reduced padding before carousel */}
-        <div className="py-8 sm:py-10"></div>
-
-        <HorizontalScrollCarousel />
 
         {/* Core Tutoring Plan Section */}
         <div className="relative py-4 sm:py-6">
@@ -241,7 +236,7 @@ export default function ServicesPage() {
               </p>
             </div>
             <div className="mt-6 sm:mt-8 flex justify-center">
-              <div className="rounde d-full overflow-hidden w-72 h-72 sm:w-96 sm:h-96 md:w-112 md:h-112 bg-[#303B42]">
+              <div className="rounded-full overflow-hidden w-72 h-72 sm:w-96 sm:h-96 md:w-112 md:h-112 bg-[#303B42]">
                 <video
                   className="w-full h-full object-cover"
                   autoPlay
@@ -266,6 +261,12 @@ export default function ServicesPage() {
         </div>
       </main>
 
+      {/* Footer */}
+      <footer className="bg-[#1F1D24] py-4 text-center">
+        <Link href="https://www.aoniqq.com/websitecreation" className="text-[#52747D] hover:text-[#A3B8C2] transition-colors duration-300 underline">
+          Site by Aoniqq LLC
+        </Link>
+      </footer>
 
       {/* Contact Modal */}
       <ContactModal isOpen={contactModalOpen} onClose={() => setContactModalOpen(false)} />
@@ -294,33 +295,12 @@ export default function ServicesPage() {
           overflow-y: visible;
         }
 
-        .container {
-          display: flex;
-          flex-wrap: nowrap;
-          height: 100vh;
-        }
-
-        @media (max-width: 640px) {
-          .container {
-            height: auto;
-          }
-        }
-
-        .text-fit {
-          font-size: clamp(0.75rem, 3vw, 1.5rem);
-          line-height: 1.3;
-          display: -webkit-box;
-          -webkit-line-clamp: 15;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-        }
-
         .shadow-text {
           text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
 
         @media (min-width: 2560px) {
-          .panel p {
+          p {
             font-size: 1.25rem;
             line-height: 1.75rem;
           }
