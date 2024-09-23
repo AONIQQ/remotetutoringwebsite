@@ -112,7 +112,7 @@ export default function ServicesPage() {
 
   useEffect(() => {
     const savedState = localStorage.getItem('openSections');
-    let initialState = savedState
+    const initialState = savedState
       ? JSON.parse(savedState)
       : new Array(sections.length).fill(false);
 
@@ -120,13 +120,13 @@ export default function ServicesPage() {
 
     if (width >= 2560) {
       // 24 inches and above
-      initialState = new Array(sections.length).fill(true);
+      setOpenSections(new Array(sections.length).fill(true));
     } else if (width >= 1024) {
       // Between 12 inches and 24 inches
-      initialState = initialState.map((isOpen: boolean, index: number) => index === 1 || isOpen);
+      setOpenSections(initialState.map((isOpen: boolean, index: number) => index === 1 || isOpen));
+    } else {
+      setOpenSections(initialState);
     }
-
-    setOpenSections(initialState);
   }, [sections.length]);
 
   const toggleSection = (index: number) => {
@@ -341,6 +341,7 @@ export default function ServicesPage() {
           margin: 0;
           padding: 0;
           width: 100%;
+          min-height: 100vh;
           overflow-x: hidden;
           font-family: 'Signika Negative', sans-serif, Arial;
         }
@@ -351,15 +352,19 @@ export default function ServicesPage() {
           background-position: center center;
           background-size: cover;
           background-attachment: fixed;
-          height: 100%;
-          overflow-y: scroll;
         }
 
         body {
           position: relative;
-          height: unset;
           overflow-x: hidden;
-          overflow-y: visible;
+          overflow-y: auto;
+          background-color: transparent;
+        }
+
+        #__next {
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
         }
 
         .shadow-text {
