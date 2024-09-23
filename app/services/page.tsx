@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ContactModal } from '@/components/ContactModal';
@@ -12,32 +12,14 @@ interface SectionProps {
   icon: string;
   isOpen: boolean;
   onToggle: () => void;
-  id: string;
 }
 
-const ExpandableSection: React.FC<SectionProps> = ({ title, content, icon, isOpen, onToggle, id }) => {
+const ExpandableSection: React.FC<SectionProps> = ({ title, content, icon, isOpen, onToggle }) => {
   const contentRef = useRef<HTMLDivElement>(null);
-  const [height, setHeight] = useState<number | undefined>(undefined);
 
   useEffect(() => {
     if (contentRef.current) {
-      const resizeObserver = new ResizeObserver(() => {
-        setHeight(contentRef.current?.scrollHeight);
-      });
-
-      resizeObserver.observe(contentRef.current);
-
-      return () => {
-        resizeObserver.disconnect();
-      };
-    }
-  }, []);
-
-  useEffect(() => {
-    if (isOpen) {
-      setHeight(contentRef.current?.scrollHeight);
-    } else {
-      setHeight(0);
+      contentRef.current.style.maxHeight = isOpen ? `${contentRef.current.scrollHeight}px` : '0';
     }
   }, [isOpen]);
 
@@ -63,8 +45,7 @@ const ExpandableSection: React.FC<SectionProps> = ({ title, content, icon, isOpe
       </div>
       <div
         ref={contentRef}
-        style={{ height: height !== undefined ? `${height}px` : undefined }}
-        className={`overflow-hidden transition-all duration-300 ease-in-out`}
+        className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-[2000px]' : 'max-h-0'}`}
       >
         <div className="p-4 text-[#E0E7EB] space-y-4">
           {content.map((paragraph, index) => (
@@ -83,11 +64,10 @@ const ExpandableSection: React.FC<SectionProps> = ({ title, content, icon, isOpe
 export default function ServicesPage() {
   const [contactModalOpen, setContactModalOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [openSections, setOpenSections] = useState<{[key: string]: boolean}>({});
+  const [openSections, setOpenSections] = useState<boolean[]>([]);
 
   const sections = [
     {
-      id: 'intro-chem',
       title: 'INTRODUCTORY / GENERAL CHEMISTRY',
       content: [
         "General Chemistry seems easy until suddenly, it doesn't. I almost failed General Chemistry II. I followed along in class and understood all the concepts. The first exam completely blindsided me. I think I got a 38. The professor said the average was even lower. Looking back, the exam was fair. About half the class dropped the next day, I didn't. I had to completely rebuild the way I was approaching exams, the material, and school in general, and really struggled my way through on pure determination. 7 out of an original 60 of us took the final exam, I passed the course with a C.",
@@ -98,7 +78,6 @@ export default function ServicesPage() {
       icon: '/Icon Graphics/Icon_3D Molecule.png',
     },
     {
-      id: 'organic-chem',
       title: 'ORGANIC CHEMISTRY',
       content: [
         "'Everybody wants to be a bodybuilder, but nobody wants to lift no heavy-ass weights.' -Ronnie Coleman.\n\n This class is hard. For many people, this is the first time that studying and doing the problems isn't enough. Reading, comprehension, memorization, and mathematical problem solving skills are necessary, but they won't answer the questions. Don't treat this like other courses.",
@@ -108,7 +87,6 @@ export default function ServicesPage() {
       icon: '/Icon Graphics/Icon_Hexagons.png',
     },
     {
-      id: 'advanced-courses',
       title: 'ADVANCED COURSES',
       content: [
         "Must be evaluated on a case-by-case basis. I know the limits of my knowledge and I'll never misrepresent that. The more advanced these courses get, the more specific they become. If what you're looking for is primarily in my area of expertise then it's likely a great fit, if not I'll point you in the right direction.",
@@ -122,25 +100,23 @@ export default function ServicesPage() {
 
   useEffect(() => {
     const savedState = localStorage.getItem('openSections');
-    const initialState = savedState ? JSON.parse(savedState) : {};
+    const initialState = savedState ? JSON.parse(savedState) : new Array(sections.length).fill(false);
 
     const handleResize = () => {
       const width = window.innerWidth;
-      let newState: {[key: string]: boolean} = {};
+      let newState: boolean[];
 
       if (width >= 2560) {
         // 24 inches and above (assuming 2560px is roughly 24 inches)
-        sections.forEach(section => {
-          newState[section.id] = true;
-        });
+        newState = new Array(sections.length).fill(true);
       } else if (width >= 1024) {
         // Between 12 inches and 24 inches (laptops)
-        sections.forEach(section => {
-          newState[section.id] = section.id === 'organic-chem' || initialState[section.id];
-        });
+        newState = Array.isArray(initialState) 
+          ? initialState.map((isOpen: boolean, index: number) => index === 1 || isOpen)
+          : new Array(sections.length).fill(false).map((_, index) => index === 1);
       } else {
         // Less than 12 inches (mobile and iPad)
-        newState = {...initialState};
+        newState = Array.isArray(initialState) ? [...initialState] : new Array(sections.length).fill(false);
       }
 
       setOpenSections(newState);
@@ -150,15 +126,15 @@ export default function ServicesPage() {
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  }, [sections.length]);
 
-  const toggleSection = useCallback((id: string) => {
+  const toggleSection = (index: number) => {
     setOpenSections(prev => {
-      const newState = {...prev, [id]: !prev[id]};
+      const newState = prev.map((isOpen, i) => i === index ? !isOpen : isOpen);
       localStorage.setItem('openSections', JSON.stringify(newState));
       return newState;
     });
-  }, []);
+  };
 
   return (
     <div className="min-h-screen overflow-x-hidden text-white font-sans flex flex-col">
@@ -242,12 +218,12 @@ export default function ServicesPage() {
 
         {/* Expandable Sections */}
         <div className="max-w-4xl mx-auto px-4 py-8">
-          {sections.map((section) => (
+          {sections.map((section, index) => (
             <ExpandableSection
-              key={section.id}
+              key={index}
               {...section}
-              isOpen={openSections[section.id] || false}
-              onToggle={() => toggleSection(section.id)}
+              isOpen={openSections[index]}
+              onToggle={() => toggleSection(index)}
             />
           ))}
         </div>
