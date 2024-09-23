@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ContactModal } from '@/components/ContactModal';
@@ -14,18 +14,16 @@ interface SectionProps {
   onToggle: () => void;
 }
 
-const ExpandableSection: React.FC<SectionProps> = ({ title, content, icon, isOpen, onToggle }) => {
-  const contentRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (contentRef.current) {
-      contentRef.current.style.maxHeight = isOpen ? `${contentRef.current.scrollHeight}px` : '0';
-    }
-  }, [isOpen]);
-
+const ExpandableSection: React.FC<SectionProps> = ({
+  title,
+  content,
+  icon,
+  isOpen,
+  onToggle,
+}) => {
   return (
     <div className="mb-6 bg-gradient-to-r from-[#303B42] via-[#52747D] to-[#303B42] rounded-lg shadow-lg overflow-hidden">
-      <div 
+      <div
         className="flex justify-between items-center p-4 cursor-pointer"
         onClick={(e) => {
           e.preventDefault();
@@ -38,18 +36,32 @@ const ExpandableSection: React.FC<SectionProps> = ({ title, content, icon, isOpe
         </h2>
         <div className="flex items-center">
           <div className="bg-[#1F1D24] p-1 sm:p-2 rounded-full shadow-lg mr-4">
-            <Image src={icon} alt="Section Icon" width={40} height={40} className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10" />
+            <Image
+              src={icon}
+              alt="Section Icon"
+              width={40}
+              height={40}
+              className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10"
+            />
           </div>
-          <ChevronDown className={`w-6 h-6 transition-transform duration-300 ${isOpen ? 'transform rotate-180' : ''}`} />
+          <ChevronDown
+            className={`w-6 h-6 transition-transform duration-300 ${
+              isOpen ? 'transform rotate-180' : ''
+            }`}
+          />
         </div>
       </div>
       <div
-        ref={contentRef}
-        className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-[2000px]' : 'max-h-0'}`}
+        className={`overflow-hidden transition-all duration-300 ease-in-out ${
+          isOpen ? 'max-h-[2000px]' : 'max-h-0'
+        }`}
       >
         <div className="p-4 text-[#E0E7EB] space-y-4">
           {content.map((paragraph, index) => (
-            <div key={index} className="bg-gradient-to-r from-[#1F2937] to-[#374151] p-4 rounded-lg shadow-md">
+            <div
+              key={index}
+              className="bg-gradient-to-r from-[#1F2937] to-[#374151] p-4 rounded-lg shadow-md"
+            >
               <p className="text-xs sm:text-sm md:text-base lg:text-lg leading-relaxed whitespace-pre-line">
                 {paragraph}
               </p>
@@ -80,8 +92,8 @@ export default function ServicesPage() {
     {
       title: 'ORGANIC CHEMISTRY',
       content: [
-        "'Everybody wants to be a bodybuilder, but nobody wants to lift no heavy-ass weights.' -Ronnie Coleman.\n\n This class is hard. For many people, this is the first time that studying and doing the problems isn't enough. Reading, comprehension, memorization, and mathematical problem solving skills are necessary, but they won't answer the questions. Don't treat this like other courses.",
-        "The most common questions in this course require seeing a molecule represented in 2D on a paper, visualizing it in 3D in your head, understanding the spatial energy distribution across the molecule, performing a complex operation on it based on that energetic understanding to yield a different 3D structure in your head, and then depicting that entire process in 2D on paper. You will then have to repeat this process, sometimes several times.\n\nSeeing it in 3D in your head is the easy way.  I can help with that.  Unfortunately, mental visualization and manipulation of complex 3D objects is one of those things that not everyone can do, and you may need to find another way to approach these problems.  I can help with that too.",
+        "'Everybody wants to be a bodybuilder, but nobody wants to lift no heavy-ass weights.' -Ronnie Coleman.\n\nThis class is hard. For many people, this is the first time that studying and doing the problems isn't enough. Reading, comprehension, memorization, and mathematical problem solving skills are necessary, but they won't answer the questions. Don't treat this like other courses.",
+        "The most common questions in this course require seeing a molecule represented in 2D on a paper, visualizing it in 3D in your head, understanding the spatial energy distribution across the molecule, performing a complex operation on it based on that energetic understanding to yield a different 3D structure in your head, and then depicting that entire process in 2D on paper. You will then have to repeat this process, sometimes several times.\n\nSeeing it in 3D in your head is the easy way. I can help with that. Unfortunately, mental visualization and manipulation of complex 3D objects is one of those things that not everyone can do, and you may need to find another way to approach these problems. I can help with that too.",
         "It is absolutely possible to get an A in this class. I did, and people do every year. At that point in my life, it seemed important to me that I did it on my own. This was my priority, and I sacrificed whatever it took to achieve it. I could have saved so much time, effort, and pain if I'd had a tutor working with me as I do with my clients.",
       ],
       icon: '/Icon Graphics/Icon_Hexagons.png',
@@ -92,7 +104,7 @@ export default function ServicesPage() {
         "Must be evaluated on a case-by-case basis. I know the limits of my knowledge and I'll never misrepresent that. The more advanced these courses get, the more specific they become. If what you're looking for is primarily in my area of expertise then it's likely a great fit, if not I'll point you in the right direction.",
         "Advanced courses often require a deep understanding of fundamental concepts and the ability to apply them in complex scenarios. My approach to tutoring these courses involves not just helping you with the current material, but also strengthening your foundational knowledge to ensure you have a solid base to build upon.",
         "We'll focus on developing problem-solving strategies specific to your field, whether it's physical chemistry, biochemistry, or any other specialized area. I'll help you connect the dots between different concepts and show you how to approach complex problems systematically.",
-        "Remember, at this level, understanding the why behind each concept is just as important as knowing the how. We'll dive deep into the reasoning behind theories and equations, helping you develop a intuitive understanding of the material.",
+        "Remember, at this level, understanding the why behind each concept is just as important as knowing the how. We'll dive deep into the reasoning behind theories and equations, helping you develop an intuitive understanding of the material.",
       ],
       icon: '/Icon Graphics/Icon_Microscope.png',
     },
@@ -100,31 +112,26 @@ export default function ServicesPage() {
 
   useEffect(() => {
     const savedState = localStorage.getItem('openSections');
-    const initialState = savedState ? JSON.parse(savedState) : new Array(sections.length).fill(false);
+    const initialState = savedState
+      ? JSON.parse(savedState)
+      : new Array(sections.length).fill(false);
 
-    const handleResize = () => {
-      const width = window.innerWidth;
-      let newState = [...initialState];
+    const width = window.innerWidth;
 
-      if (width >= 2560) {
-        // 24 inches and above (assuming 2560px is roughly 24 inches)
-        newState = new Array(sections.length).fill(true);
-      } else if (width >= 1024) {
-        // Between 12 inches and 24 inches (laptops)
-        newState = newState.map((_, index) => index === 1 || newState[index]);
-      }
-
-      setOpenSections(newState);
-    };
-
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    if (width >= 2560) {
+      // 24 inches and above
+      setOpenSections(new Array(sections.length).fill(true));
+    } else if (width >= 1024) {
+      // Between 12 inches and 24 inches
+      setOpenSections(initialState.map((isOpen: boolean, index: number) => index === 1 || isOpen));
+    } else {
+      setOpenSections(initialState);
+    }
   }, [sections.length]);
 
   const toggleSection = (index: number) => {
-    setOpenSections(prev => {
-      const newState = prev.map((isOpen, i) => i === index ? !isOpen : isOpen);
+    setOpenSections((prev) => {
+      const newState = prev.map((isOpen, i) => (i === index ? !isOpen : isOpen));
       localStorage.setItem('openSections', JSON.stringify(newState));
       return newState;
     });
@@ -135,7 +142,8 @@ export default function ServicesPage() {
       {/* Top banner */}
       <div className="bg-gradient-to-r from-[#52747d] via-[#3F545D] to-[#52747d] text-white text-center py-2 text-xs sm:text-sm font-medium shadow-md">
         <div className="relative z-10">
-          Only 20 openings available this semester! Schedule your free discovery call today!
+          Only 20 openings available this semester! Schedule your free discovery
+          call today!
         </div>
       </div>
 
@@ -143,14 +151,26 @@ export default function ServicesPage() {
       <header className="bg-[#1F1D24] flex justify-between items-center px-4 sm:px-6 py-4 shadow-lg sticky top-0 z-50">
         <div className="flex items-center">
           <Link href="/">
-            <Image src="/logo/logo.png" alt="Remote Tutoring Logo" width={180} height={45} className="w-32 sm:w-44 h-auto" />
+            <Image
+              src="/logo/logo.png"
+              alt="Remote Tutoring Logo"
+              width={180}
+              height={45}
+              className="w-32 sm:w-44 h-auto"
+            />
           </Link>
         </div>
         <nav className="hidden md:flex items-center space-x-4 lg:space-x-6">
-          <Link href="/" className="text-white hover:text-[#52747D] text-sm lg:text-base">
+          <Link
+            href="/"
+            className="text-white hover:text-[#52747D] text-sm lg:text-base"
+          >
             Home
           </Link>
-          <Link href="/about" className="text-white hover:text-[#52747D] text-sm lg:text-base">
+          <Link
+            href="/about"
+            className="text-white hover:text-[#52747D] text-sm lg:text-base"
+          >
             About
           </Link>
           <button
@@ -160,14 +180,17 @@ export default function ServicesPage() {
             Contact
           </button>
           <button
-            onClick={() => window.location.href = '/book'}
+            onClick={() => (window.location.href = '/book')}
             className="bg-gradient-to-r from-[#52747D] to-[#3F545D] text-white py-2 px-4 rounded-lg flex items-center shadow-md hover:shadow-lg transition-all duration-300 text-sm"
           >
-          Book a Call
+            Book a Call
           </button>
         </nav>
         <div className="md:hidden">
-          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="text-white">
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="text-white"
+          >
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
@@ -193,7 +216,7 @@ export default function ServicesPage() {
               Contact
             </button>
             <button
-              onClick={() => window.location.href = '/book'}
+              onClick={() => (window.location.href = '/book')}
               className="bg-gradient-to-r from-[#52747D] to-[#3F545D] text-white py-2 px-4 rounded-lg flex items-center shadow-md hover:shadow-lg transition-all duration-300 text-sm"
             >
               Book a Call
@@ -222,6 +245,16 @@ export default function ServicesPage() {
           ))}
         </div>
 
+        {/* New "Book a discovery call" button after ADVANCED COURSES */}
+        <div className="max-w-4xl mx-auto px-4 mb-12">
+          <Link href="/book">
+            <button className="w-full bg-gradient-to-r from-[#52747D] to-[#3F545D] text-white py-4 px-8 rounded-lg flex items-center justify-center shadow-md hover:shadow-lg transition-all duration-300 text-xl font-semibold">
+              <Phone className="w-6 h-6 mr-3" />
+              Book a free discovery call
+            </button>
+          </Link>
+        </div>
+
         {/* Core Tutoring Plan Section */}
         <div className="relative py-4 sm:py-6">
           <div className="max-w-4xl mx-auto px-4">
@@ -230,7 +263,12 @@ export default function ServicesPage() {
             </h2>
             <div className="p-4 sm:p-6 rounded-lg text-[#E0E7EB] relative z-10 bg-gradient-to-br from-[#303B42] to-[#52747D] shadow-xl">
               <p className="text-sm sm:text-base md:text-lg text-center">
-                The core plan offers one hour of tutoring per week for the duration of the semester at a rate of $100/hour. The total cost is paid upfront through Stripe, with financing options available if you&apos;d rather pay over time. I&apos;m confident in the quality of my services, which is why I guarantee my performance and yours (see below).
+                The core plan offers one hour of tutoring per week for the
+                duration of the semester at a rate of $100/hour. The total cost
+                is paid upfront through Stripe, with financing options available
+                if you&apos;d rather pay over time. I&apos;m confident in the quality of
+                my services, which is why I guarantee my performance and yours
+                (see below).
               </p>
             </div>
           </div>
@@ -244,17 +282,23 @@ export default function ServicesPage() {
             </h2>
             <div className="p-4 sm:p-6 md:p-8 rounded-lg text-[#E0E7EB] relative z-10 bg-gradient-to-br from-[#303B42] to-[#52747D] shadow-xl">
               <p className="mb-4 text-sm sm:text-base md:text-lg text-center">
-                I guarantee my performance, presence, and punctuality. If I&apos;m ever late, absent, or unprepared* for a
-                session, I&apos;ll issue you a refund for 100% of the cost of the session, offer a free replacement session,
-                and void your commitment to me so that you can terminate our arrangement for a full refund if you
-                believe I&apos;m not providing the value I promised you. I can&apos;t guarantee that you&apos;ll go to every class, take
-                notes, submit assignments on time, study, show up for exams,
-                or even show up for our sessions.
-                But if you do all that, I guarantee that you will not fail the class. If something unforeseen happens
-                and you do, I&apos;ll issue you a full refund and I&apos;ll tutor you for free if you retake the course.
+                I guarantee my performance, presence, and punctuality. If I&apos;m
+                ever late, absent, or unprepared*
+                for a session, I&apos;ll issue you
+                a refund for 100% of the cost of the session, offer a free
+                replacement session, and void your commitment to me so that you
+                can terminate our arrangement for a full refund if you believe
+                I&apos;m not providing the value I promised you. I can&apos;t guarantee
+                that you&apos;ll go to every class, take notes, submit assignments on
+                time, study, show up for exams, or even show up for our
+                sessions. But if you do all that, I guarantee that you will not
+                fail the class. If something unforeseen happens and you do, I&apos;ll
+                issue you a full refund and I&apos;ll tutor you for free if you
+                retake the course.
               </p>
               <p className="text-xs sm:text-sm italic text-center">
-                *Guarantee subject to contract terms and conditions. Ask me about this on our call.
+                *Guarantee subject to contract terms and conditions. Ask me
+                about this on our call.
               </p>
             </div>
             <div className="mt-6 sm:mt-8 flex justify-center">
@@ -266,15 +310,18 @@ export default function ServicesPage() {
                   muted
                   playsInline
                 >
-                  <source src="/Videos & GIFs/Beaker Animation.mp4" type="video/mp4" />
+                  <source
+                    src="/Videos & GIFs/Beaker Animation.mp4"
+                    type="video/mp4"
+                  />
                   Your browser does not support the video tag.
                 </video>
               </div>
             </div>
             <div className="mt-6 sm:mt-8 flex justify-center">
               <Link href="/book">
-                <button className="bg-gradient-to-r from-[#52747D] to-[#3F545D] text-white py-2 sm:py-3 px-4 sm:px-6 rounded-lg flex items-center shadow-md hover:shadow-lg transition-all duration-300 text-sm sm:text-base">
-                  <Phone className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+                <button className="bg-gradient-to-r from-[#52747D] to-[#3F545D] text-white py-4 px-8 rounded-lg flex items-center shadow-md hover:shadow-lg transition-all duration-300 text-xl font-semibold">
+                  <Phone className="w-6 h-6 mr-3" />
                   Book a free discovery call
                 </button>
               </Link>
@@ -283,15 +330,11 @@ export default function ServicesPage() {
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="bg-[#1F1D24] py-4 text-center">
-        <Link href="https://www.aoniqq.com/websitecreation" className="text-[#52747D] hover:text-[#A3B8C2] transition-colors duration-300 underline">
-          Site by Aoniqq LLC
-        </Link>
-      </footer>
-
       {/* Contact Modal */}
-      <ContactModal isOpen={contactModalOpen} onClose={() => setContactModalOpen(false)} />
+      <ContactModal
+        isOpen={contactModalOpen}
+        onClose={() => setContactModalOpen(false)}
+      />
 
       <style jsx global>{`
         html,
@@ -299,27 +342,40 @@ export default function ServicesPage() {
           margin: 0;
           padding: 0;
           width: 100%;
-          height: 100%;
+          min-height: 100vh;
           overflow-x: hidden;
           font-family: 'Signika Negative', sans-serif, Arial;
         }
 
         html {
-          background: url('/Background Graphics/Background_Static Dark Hexagon Pattern.png') no-repeat center center fixed;
+          background-image: url('/Background Graphics/Background_Static Dark Hexagon Pattern.png');
+          background-repeat: no-repeat;
+          background-position: center center;
           background-size: cover;
-          height: 100%;
-          overflow-y: scroll;
+          background-attachment: fixed;
         }
 
         body {
           position: relative;
-          height: unset;
           overflow-x: hidden;
-          overflow-y: visible;
+          overflow-y: auto;
+          background-color: transparent;
+        }
+
+        #__next {
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
         }
 
         .shadow-text {
           text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        @media (max-width: 768px) {
+          html {
+            background-attachment: scroll;
+          }
         }
 
         @media (min-width: 2560px) {

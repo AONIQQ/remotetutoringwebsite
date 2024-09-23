@@ -67,7 +67,7 @@ export default function AboutPage() {
           <Link href="/" className="text-white hover:text-[#52747D]">Home</Link>
           <Link href="/services" className="text-white hover:text-[#52747D]">Services</Link>
           <button onClick={() => setContactModalOpen(true)} className="text-white hover:text-[#52747D]">Contact</button>
-          <Link href="/book" className="bg-gradient-to-r from-[#52747D] to-[#3F545D] text-white py-2 px-4 rounded-lg hover:shadow-lg transition-all duration-300">
+          <Link href="/book" className="bg-gradient-to-r from-[#52747D] to-[#3F545D] text-white py-3 px-6 rounded-lg hover:shadow-lg transition-all duration-300 text-lg font-semibold">
             Book a Call
           </Link>
         </nav>
@@ -97,7 +97,7 @@ export default function AboutPage() {
             >
               Contact
             </button>
-            <Link href="/book" className="bg-gradient-to-r from-[#52747D] to-[#3F545D] text-white py-2 px-4 rounded-lg hover:shadow-lg transition-all duration-300 text-sm">
+            <Link href="/book" className="bg-gradient-to-r from-[#52747D] to-[#3F545D] text-white py-3 px-6 rounded-lg hover:shadow-lg transition-all duration-300 text-base font-semibold">
               Book a Call
             </Link>
           </nav>
@@ -128,10 +128,12 @@ export default function AboutPage() {
                 <p className="mb-6 text-[#E0E7EB]">
                   Rob founded Remote Tutoring in 2024 to pursue his love of teaching while sustaining his private sector projects.
                 </p>
-                <button className="bg-gradient-to-r from-[#52747D] to-[#3F545D] text-white py-2 px-4 rounded-lg flex items-center shadow-md hover:shadow-lg transition-all duration-300">
-                  <Phone className="w-5 h-5 mr-2" />
-                  Book a free discovery call
-                </button>
+                <Link href="/book">
+                  <button className="bg-gradient-to-r from-[#52747D] to-[#3F545D] text-white py-4 px-8 rounded-lg flex items-center shadow-md hover:shadow-lg transition-all duration-300 text-xl font-semibold">
+                    <Phone className="w-6 h-6 mr-3" />
+                    Book a free discovery call
+                  </button>
+                </Link>
               </div>
             </div>
 
@@ -176,12 +178,12 @@ export default function AboutPage() {
             </div>
 
             <div className="text-center">
-              <p className="mb-4 text-[#E0E7EB]">
+              <p className="mb-6 text-[#E0E7EB] text-lg">
                 If you&apos;re interested in working with me, awesome, let&apos;s set up a call here. If you still have questions or just want to get a better feel, you&apos;re welcome to ask me during our meeting, or you can email or text me here.
               </p>
               <Link href="/book" className="inline-block">
-                <button className="bg-gradient-to-r from-[#52747D] to-[#3F545D] text-white py-2 px-4 rounded-lg flex items-center shadow-md hover:shadow-lg transition-all duration-300">
-                  <Phone className="w-5 h-5 mr-2" />
+                <button className="bg-gradient-to-r from-[#52747D] to-[#3F545D] text-white py-4 px-8 rounded-lg flex items-center shadow-md hover:shadow-lg transition-all duration-300 text-xl font-semibold">
+                  <Phone className="w-6 h-6 mr-3" />
                   Book a free discovery call
                 </button>
               </Link>
