@@ -19,11 +19,7 @@ const ExpandableSection: React.FC<SectionProps> = ({ title, content, icon, isOpe
 
   useEffect(() => {
     if (contentRef.current) {
-      if (isOpen) {
-        contentRef.current.style.maxHeight = `${contentRef.current.scrollHeight}px`;
-      } else {
-        contentRef.current.style.maxHeight = '0';
-      }
+      contentRef.current.style.maxHeight = isOpen ? `${contentRef.current.scrollHeight}px` : '0';
     }
   }, [isOpen]);
 
@@ -31,7 +27,10 @@ const ExpandableSection: React.FC<SectionProps> = ({ title, content, icon, isOpe
     <div className="mb-6 bg-gradient-to-r from-[#303B42] via-[#52747D] to-[#303B42] rounded-lg shadow-lg overflow-hidden">
       <div 
         className="flex justify-between items-center p-4 cursor-pointer"
-        onClick={onToggle}
+        onClick={(e) => {
+          e.preventDefault();
+          onToggle();
+        }}
       >
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white uppercase tracking-wider shadow-text">
           {title}
@@ -103,13 +102,13 @@ export default function ServicesPage() {
     const handleResize = () => {
       const width = window.innerWidth;
       if (width >= 2560) {
-        // 24 inches and above (assuming 1920px is roughly 24 inches)
+        // 24 inches and above (assuming 2560px is roughly 24 inches)
         setOpenSections(new Array(sections.length).fill(true));
       } else if (width >= 1024) {
-        // Between 12 inches and 24 inches
+        // Between 12 inches and 24 inches (laptops)
         setOpenSections([false, true, false]); // Only ORGANIC CHEMISTRY is open
       } else {
-        // Less than 12 inches
+        // Less than 12 inches (mobile and iPad)
         setOpenSections(new Array(sections.length).fill(false));
       }
     };
@@ -247,7 +246,7 @@ export default function ServicesPage() {
                 believe I&apos;m not providing the value I promised you. I can&apos;t guarantee that you&apos;ll go to every class, take
                 notes, submit assignments on time, study, show up for exams, or even show up for our sessions.
                 But if you do all that, I guarantee that you will not fail the class. If something unforeseen happens
-                and you do, I&apos;ll issue you a full refun d and I&apos;ll tutor you for free if you retake the course.
+                and you do, I&apos;ll issue you a full refund and I&apos;ll tutor you for free if you retake the course.
               </p>
               <p className="text-xs sm:text-sm italic text-center">
                 *Guarantee subject to contract terms and conditions. Ask me about this on our call.
@@ -301,8 +300,7 @@ export default function ServicesPage() {
         }
 
         html {
-          background: url('/Background Graphics/Background_Static Dark Hexagon Pattern.png') no-repeat center center fixed;
-          background-size: cover;
+          background: url('/Background Graphics/Background_Static Dark Hexagon Pattern.png') repeat;
           height: 100%;
           overflow-y: scroll;
         }
