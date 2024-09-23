@@ -282,11 +282,12 @@ export default function ServicesPage() {
           font-family: 'Signika Negative', sans-serif, Arial;
         }
 
-        html {
-          background: url('/Background Graphics/Background_Static Dark Hexagon Pattern.png') repeat;
-          height: 100%;
-          overflow-y: scroll;
-        }
+      html {
+  background: url('/Background Graphics/Background_Static Dark Hexagon Pattern.png') no-repeat center center fixed;
+  background-size: cover;
+  height: 100%;
+  overflow-y: scroll;
+}
 
         body {
           position: relative;
