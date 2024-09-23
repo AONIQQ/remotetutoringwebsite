@@ -89,7 +89,7 @@ export default function ServicesPage() {
         setOpenSections(new Array(sections.length).fill(true));
       } else if (width >= 1024) {
         // Between 12 inches and 24 inches
-        setOpenSections([true, ...new Array(sections.length - 1).fill(false)]);
+        setOpenSections([false, true, false]); // Only ORGANIC CHEMISTRY is open
       } else {
         // Less than 12 inches
         setOpenSections(new Array(sections.length).fill(false));
