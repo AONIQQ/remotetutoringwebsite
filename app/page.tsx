@@ -100,8 +100,26 @@ export default function ServicesPage() {
 
   useEffect(() => {
     const savedState = localStorage.getItem('openSections');
-    const initialState = savedState ? JSON.parse(savedState) : new Array(sections.length).fill(false);
-    setOpenSections(initialState);
+    let initialState = savedState ? JSON.parse(savedState) : new Array(sections.length).fill(false);
+
+    const handleResize = () => {
+      const width = window.innerWidth;
+      let newState = [...initialState];
+
+      if (width >= 2560) {
+        // 24 inches and above (assuming 2560px is roughly 24 inches)
+        newState = new Array(sections.length).fill(true);
+      } else if (width >= 1024) {
+        // Between 12 inches and 24 inches (laptops)
+        newState = newState.map((_, index) => index === 1 || newState[index]);
+      }
+
+      setOpenSections(newState);
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, [sections.length]);
 
   const toggleSection = (index: number) => {
