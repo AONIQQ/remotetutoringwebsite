@@ -261,12 +261,7 @@ export default function ServicesPage() {
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="bg-[#1F1D24] py-4 text-center">
-        <Link href="https://www.aoniqq.com/websitecreation" className="text-[#52747D] hover:text-[#A3B8C2] transition-colors duration-300 underline">
-          Site by Aoniqq LLC
-        </Link>
-      </footer>
+   
 
       {/* Contact Modal */}
       <ContactModal isOpen={contactModalOpen} onClose={() => setContactModalOpen(false)} />
