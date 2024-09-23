@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ContactModal } from '@/components/ContactModal';
@@ -14,35 +14,53 @@ interface SectionProps {
   onToggle: () => void;
 }
 
-const ExpandableSection: React.FC<SectionProps> = ({ title, content, icon, isOpen, onToggle }) => (
-  <div className="mb-6 bg-gradient-to-r from-[#303B42] via-[#52747D] to-[#303B42] rounded-lg shadow-lg overflow-hidden">
-    <div 
-      className="flex justify-between items-center p-4 cursor-pointer"
-      onClick={onToggle}
-    >
-      <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white uppercase tracking-wider shadow-text">
-        {title}
-      </h2>
-      <div className="flex items-center">
-        <div className="bg-[#1F1D24] p-1 sm:p-2 rounded-full shadow-lg mr-4">
-          <Image src={icon} alt="Section Icon" width={40} height={40} className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10" />
+const ExpandableSection: React.FC<SectionProps> = ({ title, content, icon, isOpen, onToggle }) => {
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (contentRef.current) {
+      if (isOpen) {
+        contentRef.current.style.maxHeight = `${contentRef.current.scrollHeight}px`;
+      } else {
+        contentRef.current.style.maxHeight = '0';
+      }
+    }
+  }, [isOpen]);
+
+  return (
+    <div className="mb-6 bg-gradient-to-r from-[#303B42] via-[#52747D] to-[#303B42] rounded-lg shadow-lg overflow-hidden">
+      <div 
+        className="flex justify-between items-center p-4 cursor-pointer"
+        onClick={onToggle}
+      >
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white uppercase tracking-wider shadow-text">
+          {title}
+        </h2>
+        <div className="flex items-center">
+          <div className="bg-[#1F1D24] p-1 sm:p-2 rounded-full shadow-lg mr-4">
+            <Image src={icon} alt="Section Icon" width={40} height={40} className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10" />
+          </div>
+          <ChevronDown className={`w-6 h-6 transition-transform duration-300 ${isOpen ? 'transform rotate-180' : ''}`} />
         </div>
-        <ChevronDown className={`w-6 h-6 transition-transform duration-300 ${isOpen ? 'transform rotate-180' : ''}`} />
+      </div>
+      <div
+        ref={contentRef}
+        className="overflow-hidden transition-all duration-300 ease-in-out"
+        style={{ maxHeight: 0 }}
+      >
+        <div className="p-4 text-[#E0E7EB] space-y-4">
+          {content.map((paragraph, index) => (
+            <div key={index} className="bg-gradient-to-r from-[#1F2937] to-[#374151] p-4 rounded-lg shadow-md">
+              <p className="text-xs sm:text-sm md:text-base lg:text-lg leading-relaxed whitespace-pre-line">
+                {paragraph}
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
-    {isOpen && (
-      <div className="p-4 text-[#E0E7EB] space-y-4">
-        {content.map((paragraph, index) => (
-          <div key={index} className="bg-gradient-to-r from-[#1F2937] to-[#374151] p-4 rounded-lg shadow-md">
-            <p className="text-xs sm:text-sm md:text-base lg:text-lg leading-relaxed whitespace-pre-line">
-              {paragraph}
-            </p>
-          </div>
-        ))}
-      </div>
-    )}
-  </div>
-);
+  );
+};
 
 export default function ServicesPage() {
   const [contactModalOpen, setContactModalOpen] = useState(false);
@@ -229,7 +247,7 @@ export default function ServicesPage() {
                 believe I&apos;m not providing the value I promised you. I can&apos;t guarantee that you&apos;ll go to every class, take
                 notes, submit assignments on time, study, show up for exams, or even show up for our sessions.
                 But if you do all that, I guarantee that you will not fail the class. If something unforeseen happens
-                and you do, I&apos;ll issue you a full refund and I&apos;ll tutor you for free if you retake the course.
+                and you do, I&apos;ll issue you a full refun d and I&apos;ll tutor you for free if you retake the course.
               </p>
               <p className="text-xs sm:text-sm italic text-center">
                 *Guarantee subject to contract terms and conditions. Ask me about this on our call.
@@ -261,7 +279,12 @@ export default function ServicesPage() {
         </div>
       </main>
 
-   
+      {/* Footer */}
+      <footer className="bg-[#1F1D24] py-4 text-center">
+        <Link href="https://www.aoniqq.com/websitecreation" className="text-[#52747D] hover:text-[#A3B8C2] transition-colors duration-300 underline">
+          Site by Aoniqq LLC
+        </Link>
+      </footer>
 
       {/* Contact Modal */}
       <ContactModal isOpen={contactModalOpen} onClose={() => setContactModalOpen(false)} />
@@ -277,12 +300,12 @@ export default function ServicesPage() {
           font-family: 'Signika Negative', sans-serif, Arial;
         }
 
-      html {
-  background: url('/Background Graphics/Background_Static Dark Hexagon Pattern.png') no-repeat center center fixed;
-  background-size: cover;
-  height: 100%;
-  overflow-y: scroll;
-}
+        html {
+          background: url('/Background Graphics/Background_Static Dark Hexagon Pattern.png') no-repeat center center fixed;
+          background-size: cover;
+          height: 100%;
+          overflow-y: scroll;
+        }
 
         body {
           position: relative;
