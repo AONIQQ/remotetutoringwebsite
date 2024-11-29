@@ -135,6 +135,16 @@ export default function AboutPage() {
                   </button>
                 </Link>
               </div>
+              <div className="md:col-span-1">
+                <Image
+                  src="/headshot2.jpg"
+                  alt="Robert Palkovitz"
+                  className="w-full h-auto rounded-lg md:max-w-[80%] mx-auto"
+                  layout="responsive"
+                  width={400}
+                  height={400}
+                />
+              </div>
             </div>
 
             <div className="mb-12 bg-gradient-to-br from-[#1F1D24]/80 to-[#303B42]/80 p-8 rounded-lg shadow-xl backdrop-blur-sm">
