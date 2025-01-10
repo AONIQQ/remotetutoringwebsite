@@ -153,10 +153,10 @@ export default function AboutPage() {
                 I&apos;ve always been fascinated by how things work, from the macro all the way down to the nano. In college I took every Chemistry course available, earning an American Chemical Society certified Chemistry major, double-majoring with Biochemistry & Molecular Biology, and completed all the pre-med course requirements as a side interest. I conducted over 1000 hours of independent research in synthetic mechanistic organic chemistry, most of it during the summers. On top of all that, I tutored General Chemistry and Organic Chemistry 10 hours a week, served as a teaching assistant for multiple lab courses a semester, and ran weekly supplemental instruction for Organic Chemistry.
               </p>
               <p className="mb-4 text-[#E0E7EB]">
-                I attended Johns Hopkins University for graduate school and joined the Tovar lab. I scored in the 96th percentile nationally on the Organic Chemistry ACS graduate school entrance exam. My coursework included Advanced Synthetic Organic Chemistry, Advanced Mechanistic Organic Chemistry, C & O Electrochemistry, Photophysics and Photochemistry, among others. My dissertation research focused on the development of biocompatible self-assembling photocatalytic organic nanomaterials for solar fuel production. I also served as a teaching assistant for General and Organic Chemistry, became a Head TA in my second year, and volunteered for remote summer teaching during the COVID pandemic. I also taught the Chemistry with Problem Solving course, a supplemental pass/fail credit for students who earned a grade lower than a B in a prior semester of Chemistry or who had not taken Chemistry in high school.
+                I attended Johns Hopkins University for graduate school and joined the Tovar lab. I scored in the 96th percentile nationally on the Organic Chemistry ACS graduate school entrance exam. My coursework included Advanced Synthetic Organic Chemistry, Advanced Mechanistic Organic Chemistry, C Electrochemistry, Photophysics and Photochemistry, among others. My dissertation research focused on the development of biocompatible self-assembling photocatalytic organic nanomaterials for solar fuel production. I also served as a teaching assistant for General and Organic Chemistry, became a Head TA in my second year, and volunteered for remote summer teaching during the COVID pandemic. I also taught the Chemistry with Problem Solving course, a supplemental pass/fail credit for students who earned a grade lower than a B in a prior semester of Chemistry or who had not taken Chemistry in high school.
               </p>
               <p className="text-[#E0E7EB]">
-                I left JHU in the fall of 2021 with a Master&apos;s in Chemistry after the pandemic slowdown prompted the realization that a long-term career in academia didn&apos;t align with my personal goals. After graduate school, I leaned fully into private consulting work, juggling high-stakes projects and averaging 100 working hours per week across several global time zones. This was, as most things are, fun until it wasn&apos;t. I scaled back on taking new consulting jobs and found that, once I could hear myself think, I really missed teaching. That love of teaching is what drives Remote Tutoring. The core idea behind Remote Tutoring is to allow me to continue teaching far into the future without having to sacrifice my other entrepreneurial obligations and opportunities. This benefits both of us, as it firmly believes that people who teach out of joy and genuine interest do a better job. I look forward to sharing my experience, knowledge, and enthusiasm with you.
+                I left JHU in the fall of 2021 with a Master&apos;s in Chemistry after the pandemic slowdown prompted the realization that a long-term career in academia didn&apos;t align with my personal goals. After graduate school, I leaned fully into private consulting work, juggling high-stakes projects and averaging 100 working hours per week across several global time zones. This was, as most things are, fun until it wasn&apos;t. I scaled back on taking new consulting jobs and found that, once I could hear myself think, I really missed teaching. That love of teaching is what drives Remote Tutoring. The core idea behind Remote Tutoring is to allow me to continue teaching far into the future without having to sacrifice my other entrepreneurial obligations and opportunities. This benefits both of us, as I firmly believes that people who teach out of joy and genuine interest do a better job. I look forward to sharing my experience, knowledge, and enthusiasm with you.
               </p>
             </div>
 
@@ -189,7 +189,15 @@ export default function AboutPage() {
 
             <div className="text-center">
               <p className="mb-6 text-[#E0E7EB] text-lg">
-                If you&apos;re interested in working with me, awesome, let&apos;s set up a call here. If you still have questions or just want to get a better feel, you&apos;re welcome to ask me during our meeting, or you can email or text me here.
+                If you&apos;re interested in working with me, awesome, 
+                <Link href="/book" className="text-[#52747D] underline"> set up a call here</Link>. 
+                If you still have questions or just want to get a better feel,  
+                <span 
+                  onClick={() => setContactModalOpen(true)} 
+                  className="text-[#52747D] underline cursor-pointer"
+                >
+                  {' '}email or text me here
+                </span>.
               </p>
               <Link href="/book" className="inline-block">
                 <button className="bg-gradient-to-r from-[#52747D] to-[#3F545D] text-white py-4 px-8 rounded-lg flex items-center shadow-md hover:shadow-lg transition-all duration-300 text-xl font-semibold">
@@ -227,7 +235,7 @@ export default function AboutPage() {
           <div className="space-y-6">
           <div className="bg-[#303B42] p-4 rounded-lg">
               <h4 className="text-xl font-bold mb-2">Research</h4>
-              <p>Over 8000 hours of grant-funded independent research in Organic Chemistry with sub-focuses in Mechanistic and Synthetic Organic, Biochemistry, Bio-Inorganic, Nanomaterials, and Photochemistry.:</p>
+              <p>Over 8000 hours of grant-funded independent research in Organic Chemistry with sub-focuses in Mechanistic and Synthetic Organic, Biochemistry, Bio-Inorganic, Nanomaterials, and Photochemistry.</p>
               </div>
              <div className="bg-[#303B42] p-4 rounded-lg">
               <h4 className="text-xl font-bold mb-2">Chemistry Tutor</h4>
@@ -239,11 +247,6 @@ export default function AboutPage() {
               <p>Johns Hopkins University: Assisted in Organic Chemistry I, General Chemistry I, General Chemistry II, and served as Head TA for General Chemistry II.</p>
               <p>Taught Chemistry with Problem Solving II, a supplemental pass/fail credit teaching chemistry and math problem solving skills and techniques to students who earned a grade lower than a B in a prior semester of Chemistry or who had not taken Chemistry in high school.</p>
               <p>Franklin and Marshall College: Led labs in Organic Chemistry, Inorganic Chemistry, and Thermodynamics and Kinetics.</p>
-            </div>
-            <div className="bg-[#303B42] p-4 rounded-lg">
-              <h4 className="text-xl font-bold mb-2">Chemistry Tutor</h4>
-              <p>Franklin and Marshall College Quantitative & Science Center:</p>
-              <p>Tutored General Chemistry II, Organic Chemistry I & II. Led weekly Organic Chemistry Supplemental Instruction sessions for which I developed and distributed problems sets and individually guided students in solving them.</p>
             </div>
             <div className="bg-[#303B42] p-4 rounded-lg">
               <h4 className="text-xl font-bold mb-2">Private Consulting and Project Management</h4>
